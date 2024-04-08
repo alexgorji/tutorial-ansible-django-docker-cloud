@@ -1,0 +1,6 @@
+server_user: <YOUR USERNAME>
+server_user_password: !vault |
+                      $ANSIBLE_VAULT;1.1;AES256
+                      39343731356138303334626561366262663664373266373932383937643035356563346238643665
+                      ...
+ssh_key_file_name: <YOUR_SSH_KEY_FILE_NAME>

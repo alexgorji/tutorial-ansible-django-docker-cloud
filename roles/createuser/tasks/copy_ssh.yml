@@ -1,0 +1,16 @@
+---
+    
+- name: Copy private ssh key
+  become_user: "{{ server_user }}"
+  become: yes
+  copy:
+     src: "{{ ssh_key_file_name }}"
+     dest: "~/.ssh/id_rsa"
+     mode: 0600
+
+- name: Copy public ssh key
+  become_user: "{{ server_user }}"
+  become: yes
+  copy:
+     src: "{{ ssh_key_file_name }}.pub"
+     dest: ~/.ssh/id_rsa.pub
