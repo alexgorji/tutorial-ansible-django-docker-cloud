@@ -1,4 +1,4 @@
-server_user: <YOUR USERNAME>
+server_user: <YOUR_SERVER_USERNAME>
 server_user_password: !vault |
                       $ANSIBLE_VAULT;1.1;AES256
                       39343731356138303334626561366262663664373266373932383937643035356563346238643665
