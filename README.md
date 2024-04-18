@@ -8,7 +8,7 @@ Each step is at the same time a branch of its own. Here is an overview of all st
    1. Ansible configurations
    2. Installing and setting up a firewall
    3. Creating a server user, setting up the ssh connection and other security measures.
-   4. Creating a Makefile for easyier use and documetion reasons.
+   4. Creating a Makefile for easyier use and documentation reasons.
 3. **Step-2**: A very simple html site with Nginx and Docker
    1. Nginx configuration.
    1. Using docker compose and volume
