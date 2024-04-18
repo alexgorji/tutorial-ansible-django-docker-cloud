@@ -8,10 +8,12 @@ Each step is at the same time a branch of its own. Here is an overview of all st
    1. Ansible configurations
    2. Installing and setting up a firewall
    3. Creating a server user, setting up the ssh connection and other security measures.
-   4. Creating a Makefile for easyier use and documentation reasons.
-3. **Step-2**: A very simple html site with Nginx and Docker
-   1. Nginx configuration.
-   1. Using docker compose and volume
+   4. Creating a Makefile for easier use and documentation reasons.
+2. **Step-2**: A very simple html site with Nginx and Docker
+   1. Installing docker
+   2. Running an Nginx container with docker compose:
+     1. Nginx config files
+     2. Using `volume` to mounte the html file into the Nginx container. 
 3. **Step-3**: ssl letsenscript 
    1. Staging for test reasons.
    2. Adding a real certificate.
