@@ -11,3 +11,4 @@
   roles:
     - firewall
     - createuser
+    - base_installations

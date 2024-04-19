@@ -1,0 +1,28 @@
+- name: Create nginx config directory
+  ansible.builtin.file:
+    path: "{{ sites_path }}/{{ item.domain }}/nginx/conf.d/"
+    state: directory
+    mode: '0755'
+  with_items: "{{ projects }}"
+  when:
+    - item.state == 'present'
+  
+- name: Copy global nginx config file
+  ansible.builtin.copy:
+    src: nginx.conf
+    dest: "{{ sites_path }}/{{ item.domain }}/nginx/"
+  with_items: "{{ projects }}"
+  when:
+    - item.state == 'present'
+  
+- name: Create html-80-nginx-config
+  ansible.builtin.template:
+    src: nginx-html-80.j2
+    dest: "{{ sites_path }}/{{ item.domain }}/nginx/conf.d/nginx.conf"
+  vars:
+    domain: "{{ item.domain }}"
+  with_items: "{{ projects }}"
+  when:
+    - item.state == 'present'
+    - not item.ssl | default(false)
+    - item.type == "html"

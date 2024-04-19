@@ -1,0 +1,22 @@
+---
+
+- name: Projects Deployment
+  hosts: webservers
+  vars_files:
+    - env_vars/base.yml
+    - env_vars/projects.yml
+  vars:
+    ansible_become_pass: "{{ server_user_password }}"
+  roles:
+    - role: git
+      tags:
+        - git
+    - role: nginx-config
+      tags:
+        - nginx-config
+    - role: docker
+      tags:
+        - docker
+    - role: remove-project
+      tags:
+        - remove-project
