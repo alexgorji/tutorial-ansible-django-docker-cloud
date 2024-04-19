@@ -4,3 +4,4 @@ server_user_password: !vault |
                       39343731356138303334626561366262663664373266373932383937643035356563346238643665
                       ...
 ssh_key_file_name: <YOUR_SSH_KEY_FILE_NAME>
+local_public_ssh_key_path: ~/.ssh/id_ed25519.pub
