@@ -9,6 +9,7 @@ Each step is at the same time a branch of its own. Here is an overview of all st
    2. Installing and setting up a firewall
    3. Creating a server user, setting up the ssh connection and other security measures.
    4. Creating a Makefile for easier use and documentation reasons.
+   
 2. **Step-2**: A very simple html site with Nginx and Docker
    1. Preparations:
      1. Installing docker and git
