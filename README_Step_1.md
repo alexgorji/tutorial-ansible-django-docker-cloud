@@ -36,7 +36,7 @@
         	  ansible-playbook 1_setup_webserver.yml -u <YOUR_SERVER_USERNAME> -i hosts --vault-pass-file .secret
         ``` 
         
-        * By the first time, it means before creating the user, you need to use the first command: `make as-root-user-webservers`
+        * At the first time, it means before creating the user, you need to use the first command: `make as-root-user-webservers`
         * After creating the new user you need to use the second command to be able to connect to the server via ssh with your server username. The root connection in this state has already been deactivated.
 
 **Step-1 on your machine**:
