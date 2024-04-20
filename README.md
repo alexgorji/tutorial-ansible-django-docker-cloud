@@ -8,12 +8,12 @@ Each step is at the same time a branch of its own. Here is an overview of all st
    1. Ansible configurations
    2. Installing and setting up a firewall
    3. Creating a server user, setting up the ssh connection and other security measures.
-   4. Creating a Makefile for easier use and documentation reasons.
+   4. Installing docker and git
+   5. Creating a Makefile for easier use and documentation reasons.
    
 2. **Step-2**: A very simple html site with Nginx and Docker
    1. Preparations:
-     1. Installing docker and git
-     2. Creating a `projects.yml` in `env_vars` and an appropriate playbook `2_install_projects.yml`
+     1. Creating a `projects.yml` in `env_vars` and an appropriate playbook `2_install_projects.yml`
    
    2. Installing the first project.
    		* (Adding the environmental variables to `projects.yml` for each step.)
@@ -21,6 +21,7 @@ Each step is at the same time a branch of its own. Here is an overview of all st
      		2. Running an Nginx container with docker compose to deploy the simple html site on `<YOUR_SIMPLE_HTML_DOMAIN>`:
      			1. Nginx config files
      			2. Using `volume` to mount the html file into the Nginx container.
+          3. The created `docker-compose.yml` file and the Nginx config file (see `roles/nginx-config/template/nginx-html-80.j2` and `roles/docker/templates/html-80.j2`) expect to find an `html` folder containing an `index.html` file in the project root folder.
           
 3. **Step-3**: ssl letsenscript 
    * Adding the environmental variables to `projects.yml` for each step.
