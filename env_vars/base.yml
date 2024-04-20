@@ -5,3 +5,7 @@ server_user_password: !vault |
                       ...
 ssh_key_file_name: <YOUR_SSH_KEY_FILE_NAME>
 local_public_ssh_key_path: ~/.ssh/id_ed25519.pub
+sites_path: "/home/{{ server_user }}/sites"
+
+# git_user_email: <YOUR_GIT_USER_EMAIL>
+# git_user_name: <YOUR_GIT_USER_NAME>
