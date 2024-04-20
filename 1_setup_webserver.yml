@@ -1,7 +1,6 @@
----
-
 - name: Web server installations
   hosts: webservers
+  gather_facts: no
   become_user: root
   become: true
   vars_files:
@@ -9,5 +8,9 @@
   vars:
     ansible_become_pass: "{{ server_user_password }}"
   roles:
-    - firewall
-    - createuser
+    - role: firewall
+      tags:
+        - firewall
+    - role: createuser
+      tags:
+        - createuser
