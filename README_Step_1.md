@@ -29,6 +29,11 @@
             4. Make sure the public ssh key of your local computer can be found under the given path in `\env_vars\base.yml:local_public_ssh_key_path`. This key will be added to authorized keys of your server user.
     4. **Installing docker and git**
        * `base-installations` role has been added and included in `1_setup_webserver.yml`
+    		* If you want to use private GitHub respos:
+    			1. you need to add the public ssh key of your server to your GitHub account. 
+          2. Add your GitHub credentials to `env_vars/base.yml` and uncommit the configurations part in `roles/base-installations/tasks/install_and_configure_git.yml`
+          3. It is recommended to have an extra GitHub account only for your projects which you want to deploy on the server. 
+          4. You can create a private repository with your usual GitHub account and add your GitHub server account as collaborator to the repository. In this way you have full control over your web projects.
     5. **Creating a Makefile for easier use and documentation reasons**:
         * Using `make` is a good way for saving and reusing commands. Check if it is necessary to install the software on your local machine.
         * Take a look at the `Makefile`
