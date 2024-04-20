@@ -27,16 +27,15 @@
             2. Copy the encrypted SSH keys to the Ansible project under `roles/createuser/files` and set the `ssh_key_file_name` environmental variable in `env_vars/base.yml`.
             3. Configure tasks in `roles/createuser/tasks/main.yml` for creating the server user, making it a sudoer, adding the SSH public key of your machine to the server's authorized keys, disabling root SSH access, and disabling password access.
             4. Make sure the public ssh key of your local computer can be found under the given path in `\env_vars\base.yml:local_public_ssh_key_path`. This key will be added to authorized keys of your server user.
-    4. **Installing docker and git**
+    3. **Installing docker and git**
        * `base-installations` role has been added and included in `1_setup_webserver.yml`
-    5. **Creating a Makefile for easier use and documentation reasons**:
+    4. **Creating a Makefile for easier use and documentation reasons**:
         * Using `make` is a good way for saving and reusing commands. Check if it is necessary to install the software on your local machine.
         * Take a look at the `Makefile`
-        * At the first time, it means before creating the user, you need to use the first command: `make as-root-user-webservers`
-        * After creating the new user you need to use the second command to be able to connect to the server via ssh with your server username. The root connection in this state has already been deactivated.
 
 **Step-1 on your machine**:
 After cloning or mirroring this repository, follow these steps to set up your server:
+
 
 1. Copy your cloud provider's IP address into the `hosts` file under the `[webservers]` group.
 2. Add a `.secret` file containing a password for Ansible vault to the project root.
@@ -50,11 +49,6 @@ After cloning or mirroring this repository, follow these steps to set up your se
     or if you created the `Makefile`:
     ```
     make as-root-user-webservers
-    ```
-    * Add your `<YOUR_SERVER_USERNAME>` to the second command in the `Makefile`.
-    * After creating the user you have to use the command:     
-    ```
-    make as-admin-user-webservers
     ```
 7. If necessary, remove the cloud provider's IP address from known keys with the command: `ssh-keygen -R <IP>`.
 8. You can now access the server via SSH using: `ssh <YOUR_SERVER_USERNAME>@<IP>`.
