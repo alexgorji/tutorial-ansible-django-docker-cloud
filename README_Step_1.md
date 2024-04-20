@@ -27,9 +27,9 @@
             2. Copy the encrypted SSH keys to the Ansible project under `roles/createuser/files` and set the `ssh_key_file_name` environmental variable in `env_vars/base.yml`.
             3. Configure tasks in `roles/createuser/tasks/main.yml` for creating the server user, making it a sudoer, adding the SSH public key of your machine to the server's authorized keys, disabling root SSH access, and disabling password access.
             4. Make sure the public ssh key of your local computer can be found under the given path in `\env_vars\base.yml:local_public_ssh_key_path`. This key will be added to authorized keys of your server user.
-    3. **Installing docker and git**
+    4. **Installing docker and git**
        * `base-installations` role has been added and included in `1_setup_webserver.yml`
-    4. **Creating a Makefile for easier use and documentation reasons**:
+    5. **Creating a Makefile for easier use and documentation reasons**:
         * Using `make` is a good way for saving and reusing commands. Check if it is necessary to install the software on your local machine.
         * Take a look at the `Makefile`
 
