@@ -10,13 +10,8 @@
    		* (Adding the environmental variables to `projects.yml` for each step.)
    		
 	1. Cloning a private or public git repository with a simple html file into your sites path (see role: git)
-   		* If you want to use private GitHub respos:
-   			1. you need to add the public ssh key of your server to your GitHub account. 
-          2. Add your GitHub credentials to `env_vars/base.yml` and uncommit the configurations part in `roles/base_installations/tasks/install_and_configure_git.yml`
-          3. It is recommended to have an extra GitHub account only for your projects which you want to depoly on the server. 
-          4. You can create a private repository with your usual GitHub account and add your GitHub server account as collaborator to the repository. In this way you have full control over your web projects.
-     		* We will use demo public repos for this tutorial.
-          * If you are not logged in as a GitHub user and have no ssh access to GitHub you have to clone the repos via https web URL.
+     	* We will use demo public repos for this tutorial.
+      * If you are not logged in as a GitHub user and have no ssh access to GitHub you have to clone the repos via https web URL.
    	2. Running an Nginx container with docker compose to deploy the simple html site on `<YOUR_SIMPLE_HTML_DOMAIN>` (see roles: nginx-config and docker):
    		1. Nginx config files
      	2. Using `volume` to mount the html file into the Nginx container.
