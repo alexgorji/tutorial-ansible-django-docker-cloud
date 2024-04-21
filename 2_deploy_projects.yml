@@ -11,15 +11,9 @@
   vars:
     ansible_become_pass: "{{ server_user_password }}"
   roles:
-    - role: git
+    - role: deploy-projects
       tags:
-        - git
-    - role: nginx-config
+        - deploy-projects
+    - role: remove-projects
       tags:
-        - nginx-config
-    - role: docker
-      tags:
-        - docker
-    - role: remove-project
-      tags:
-        - remove-project
+        - remove-projects
