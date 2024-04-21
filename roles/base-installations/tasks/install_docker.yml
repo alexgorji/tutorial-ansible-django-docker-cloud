@@ -1,7 +1,6 @@
 
 - name: Install aptitude
   become: true
-  become_user: root
   apt:
     name: aptitude
     state: latest
@@ -24,21 +23,18 @@
 
 - name: Add Docker GPG apt Key
   become: true
-  become_user: root
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 
 - name: Add Docker Repository
   become: true
-  become_user: root
   apt_repository:
     repo: deb https://download.docker.com/linux/ubuntu jammy stable
     state: present
 
 - name: Update apt and install docker-ce
   become: true
-  become_user: root
   apt:        
     name:
       - docker-ce
@@ -51,7 +47,6 @@
 
 - name: Add remote "ubuntu" user to "docker" group
   become: true
-  become_user: root
   user:    
     name: "{{ server_user }}"
     groups: "docker"
@@ -59,7 +54,6 @@
     
     
 - name: Install docker-compose
-  become_user: root
   become: yes
   get_url:
     url : https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
