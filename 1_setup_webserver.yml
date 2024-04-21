@@ -7,6 +7,8 @@
   become: true
   vars_files:
     - env_vars/base.yml
+  vars:
+    ansible_become_pass: "{{ server_user_password }}"
   roles:
     - role: firewall
       tags:

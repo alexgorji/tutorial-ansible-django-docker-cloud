@@ -1,0 +1,20 @@
+- name: Ensure nginx is installed
+  become: yes
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+    state: present
+    name:
+      - nginx
+
+- name: Create the Nginx configuration file
+  become: yes
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+
+- name: Delete default site
+  become: yes
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
