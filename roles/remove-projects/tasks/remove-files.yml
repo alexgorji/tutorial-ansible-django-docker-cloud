@@ -1,0 +1,19 @@
+- name: Remove project
+  block:
+  - name: Remove config file from enabled sites
+    file:
+      path: "{{ sites_path }}/etc/nginx/sites-enabled/{{ item.domain }}"
+      state: absent
+      
+  - name: Remove folder from /var/www/
+    file:
+      path: "{{ sites_path }}/var/www/{{ item.domain }}"
+      state: absent
+    
+  - name: Remove "{{ sites_path }}/DOMAIN_NAME"
+    file:
+      path: "{{ sites_path }}/{{ item.domain }}"
+      state: absent
+
+  notify: restart nginx
+

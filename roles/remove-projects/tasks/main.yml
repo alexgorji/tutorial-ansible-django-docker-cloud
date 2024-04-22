@@ -1,7 +1,5 @@
-- name: Remove "{{ sites_path }}/DOMAIN_NAME"
-  become: yes
-  file:
-    path: "{{ sites_path }}/{{ item.domain }}"
-    state: absent
-  with_items: "{{ projects }}"
-  when: item.state == 'absent'
+- name: Remove files
+  include_tasks: remove-files.yml
+  loop : "{{ projects }}"
+  when: 
+    - item.state == 'absent'

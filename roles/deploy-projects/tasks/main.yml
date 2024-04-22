@@ -1,0 +1,26 @@
+---
+- name: Checkout git repository
+  include_tasks: git.yml
+  loop : "{{ projects }}"
+  when: 
+    - item.repository
+    - item.state == 'present'
+  tags:
+    - git
+
+- name: Copy html folder
+  include_tasks: copy-html-folder.yml
+  loop : "{{ projects }}"
+  when: 
+    - item.state == 'present'
+    - item.type == "html"
+  tags:
+    - copy-html
+    
+- name: Create sites available files
+  include_tasks: nginx-sites-available-file.yml
+  loop : "{{ projects }}"
+  when: 
+    - item.state == 'present'
+  tags:
+    - nginx-sites

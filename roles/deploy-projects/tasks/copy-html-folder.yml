@@ -1,0 +1,10 @@
+---
+- name: Copy html file to var/www/$domain/html
+  become_user: "{{ server_user }}"
+  become: yes
+  ansible.builtin.copy:
+    src: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}/html/"
+    dest: "{{ sites_path }}/var/www/{{ item.domain }}/html/"
+    remote_src: yes
+  notify:
+    - restart nginx

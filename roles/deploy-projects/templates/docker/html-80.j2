@@ -1,9 +1,0 @@
-services:
-  nginx:
-    image: nginx:latest
-    volumes:
-      - ./{{ name }}/html:/var/www/{{ domain }}/html
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/conf.d:/etc/nginx/conf.d
-    ports:
-      - "80:80"

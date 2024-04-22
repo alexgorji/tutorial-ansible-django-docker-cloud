@@ -1,0 +1,20 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - {{ sites_path }}/etc/nginx/sites-enabled/:/etc/nginx/sites-enabled/:ro
+      - {{ sites_path }}/etc/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - {{ sites_path }}/var/www/:/var/www/
+      - {{ sites_path }}/etc/certbot/conf:/etc/letsencrypt
+      - {{ sites_path }}/etc/certbot/www:/var/www/certbot
+      
+    networks:
+      - nginx-network
+
+
+networks:
+  nginx-network:
+    name: nginx-network

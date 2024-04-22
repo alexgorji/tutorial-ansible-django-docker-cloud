@@ -8,3 +8,9 @@ projects:
     domain: <DOMAIN>
     type: html
     state: present
+    
+  - name: <PROJECT_NAME-2>
+    repository: https://github.com/alexgorji/demo-html-project.git
+    domain: <DOMAIN-2>
+    type: html
+    state: present

@@ -1,0 +1,9 @@
+- name: Create html-80-nginx-sites-available-for-domain
+  template:
+    src: nginx/html-80.j2
+    dest: "{{ sites_path }}/etc/nginx/sites-enabled/{{ item.domain}}"
+  vars:
+    domain: "{{ item.domain }}"
+  when:
+    - not item.ssl | default(false)
+    - item.type == "html"
