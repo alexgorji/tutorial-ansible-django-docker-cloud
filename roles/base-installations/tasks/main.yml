@@ -1,3 +1,2 @@
 - include_tasks: install_and_configure_git.yml
 - include_tasks: install_docker.yml
-- include_tasks: install_nginx.yml
