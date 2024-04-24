@@ -1,6 +1,6 @@
 ---
 - name: Copy html file to var/www/$domain/html
-  become_user: "{{ server_user }}"
+  become_user: root
   become: yes
   ansible.builtin.copy:
     src: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}/html/"

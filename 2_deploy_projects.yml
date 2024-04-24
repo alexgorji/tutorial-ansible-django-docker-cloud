@@ -1,19 +1,25 @@
 ---
-
-- name: Projects Deployment
+- name: Project Deployments
   hosts: webservers
   gather_facts: no
   become: true
   become_user: "{{ server_user }}"
+  vars:
+    ansible_become_pass: "{{ server_user_password }}"
+  
   vars_files:
     - env_vars/base.yml
     - env_vars/projects.yml
-  vars:
-    ansible_become_pass: "{{ server_user_password }}"
+    
   roles:
+    - role: nginx-setup
+      tags:
+        - nginx-setup
+
     - role: deploy-projects
       tags:
         - deploy-projects
+
     - role: remove-projects
       tags:
         - remove-projects

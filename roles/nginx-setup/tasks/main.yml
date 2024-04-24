@@ -18,3 +18,9 @@
   template:
     src: docker-compose-nginx.j2
     dest: "{{ sites_path }}/docker-compose.yml"
+
+
+- name: Start docker compose file nginx
+  community.docker.docker_compose_v2:
+    project_src: "{{ sites_path }}"
+    state: present
