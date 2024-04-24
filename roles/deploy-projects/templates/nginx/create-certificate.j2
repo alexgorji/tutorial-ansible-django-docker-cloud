@@ -1,0 +1,14 @@
+server {
+    listen 80;
+    server_name {{ domain }};
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+    
+    location / {
+        add_header Content-Type text/html;
+
+        return 200 '<html><body>Wait please (certbot)!</body></html>';
+    }
+}

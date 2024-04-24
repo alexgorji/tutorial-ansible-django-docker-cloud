@@ -1,0 +1,86 @@
+- name: Creating certificate
+  block:
+    - name: Create certbot 80 nginx sites-available for-domain
+      template:
+        src: nginx/create-certificate.j2
+        dest: "{{ sites_path }}/etc/nginx/sites-enabled/{{ item.domain}}"
+      vars:
+        domain: "{{ item.domain }}"
+        
+    - name: Restart nginx
+      community.docker.docker_compose_v2:
+        project_src: "{{ sites_path }}"
+        state: restarted
+        
+    - name: Make sure certbot folder exists in project
+      ansible.builtin.file:
+        path: "{{ sites_path }}/{{ item.domain }}/certbot"
+        state: directory
+
+    - name: Create a docker-compose.yml file in project_src
+      template:
+        src: docker/certbot.j2
+        dest: "{{ sites_path }}/{{ item.domain }}/certbot/docker-compose.yml"
+      vars:
+        domain: "{{ item.domain }}"
+        name: "{{ item.name }}"
+        
+    - name: staging block
+      block:
+        - name: Run certbot-staging service
+          community.docker.docker_compose_v2:
+            project_src: "{{ sites_path }}/{{ item.domain }}/certbot"
+            services: 
+              - certbot-staging
+            state: present
+          register: output   
+          
+        - name: Show output
+          ansible.builtin.debug:
+            msg: "{{ output }}"
+              
+        - name: Wait until the certificate is created
+          become: yes
+          become_user: root
+          ansible.builtin.wait_for:
+            path: "{{ sites_path }}/etc/certbot/conf/live/{{ item.domain }}/fullchain.pem" 
+            
+        - name: Add a file named "staging" to cert directory
+          become: yes
+          become_user: root
+          ansible.builtin.file:
+            path: "{{ sites_path }}/{{ item.domain }}/certbot/staging"
+            state: touch
+            
+      when:
+        - item.staging | default(false)
+        
+    - name: not staging block
+      block:  
+        - name: Start certbot service
+          community.docker.docker_compose_v2:
+            project_src: "{{ sites_path }}/{{ item.domain }}/certbot"
+            services: 
+              - certbot
+            state: present
+          register: output   
+          
+        - name: Show output
+          ansible.builtin.debug:
+            msg: "{{ output }}"
+            
+        - name: Wait until the certificate is created
+          become: yes
+          become_user: root
+          ansible.builtin.wait_for:
+            path: "{{ sites_path }}/etc/certbot/conf/live/{{ item.domain }}/fullchain.pem"
+            
+        - name: Remove "staging" file if existing
+          become: yes
+          become_user: root
+          ansible.builtin.file:
+            path: "{{ sites_path }}/{{ item.domain }}/certbot/staging"
+            state: absent
+      when:
+        - not item.staging | default(false)
+
