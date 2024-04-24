@@ -7,10 +7,13 @@ projects:
     repository: https://github.com/alexgorji/demo-html-project.git
     domain: <DOMAIN>
     type: html
+    ssl: true
     state: present
     
   - name: <PROJECT_NAME-2>
     repository: https://github.com/alexgorji/demo-html-project.git
     domain: <DOMAIN-2>
     type: html
+    ssl: true
+    staging: true
     state: present
