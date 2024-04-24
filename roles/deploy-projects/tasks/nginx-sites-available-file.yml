@@ -7,3 +7,5 @@
   when:
     - not item.ssl | default(false)
     - item.type == "html"
+  notify:
+    restart nginx
