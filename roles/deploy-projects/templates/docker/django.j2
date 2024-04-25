@@ -1,0 +1,13 @@
+services:
+  backend-{{ name }}:
+    image: "{{ pull_from }}"
+    container_name: backend-{{ domain }}
+    command: gunicorn {{ wsgi_path }}:application --bind 0.0.0.0:8000
+    expose:
+      - 8000
+    networks:
+      - nginx-network
+
+networks:
+  nginx-network:
+    external: true

@@ -1,0 +1,34 @@
+---
+- name: Make sure project directory exists
+  ansible.builtin.file:
+    path: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}"
+    state: directory
+    
+- name: Create docker compose for django
+  template:
+    src: docker/django.j2
+    dest: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}/docker-compose.yml"
+  vars:
+    pull_from: "{{ item.pull_from }}"
+    wsgi_path: "{{ item.wsgi_path }}"
+    domain: "{{ item.domain }}"
+    name: "{{ item.name }}"
+
+- name: Pull image and start docker compose
+  block:
+    - name: Pull image and start docker compose
+      community.docker.docker_compose_v2:
+        project_src: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}"
+        state: present
+        project_name: "{{ item.name }}-django"
+        pull: always
+        remove_orphans: true
+        services:
+          - backend-{{ item.name }}
+      register: output
+      
+    - name: Show output
+      ansible.builtin.debug:
+        msg: "{{ output }}"
+  notify:
+    - restart nginx

@@ -12,10 +12,14 @@
     - env_vars/projects.yml
     
   roles:
+    - role: clean-docker
+      tags:
+        - clean-docker
+        
     - role: nginx-setup
       tags:
         - nginx-setup
-
+      
     - role: deploy-projects
       tags:
         - deploy-projects

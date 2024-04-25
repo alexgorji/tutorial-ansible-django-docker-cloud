@@ -16,4 +16,22 @@ projects:
     type: html
     ssl: true
     staging: true
+    state: absent
+    
+  - name: <PROJECT_NAME-3>
+    domain: <DOMAIN-3>
+    type: django
+    ssl: true
+    staging: true
+    pull_from: ghcr.io/alexgorji/simple-django-project:0.1
+    wsgi_path: simple_django_project.wsgi
+    state: present
+    
+  - name: <PROJECT_NAME-4>
+    domain: <DOMAIN-4>
+    type: django
+    ssl: true
+    staging: false
+    pull_from: ghcr.io/alexgorji/simple-django-project:0.1
+    wsgi_path: simple_django_project.wsgi
     state: present

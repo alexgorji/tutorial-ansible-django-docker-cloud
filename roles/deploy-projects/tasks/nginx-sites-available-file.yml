@@ -36,12 +36,13 @@
     project_src: "{{ sites_path }}/{{ item.domain }}/certbot"
     services: 
       - "certbot-renew"
+    remove_orphans: true
     project_name: "{{ item.name }}"
     state: present
   when:
     - item.ssl | default(false)
     
-- name: Create html-80-nginx-sites-available-for-domain
+- name: Create html 80 nginx sites-available for domain
   template:
     src: nginx/html-80.j2
     dest: "{{ sites_path }}/etc/nginx/sites-enabled/{{ item.domain}}"
@@ -64,3 +65,25 @@
     - item.type == "html"
   notify:
     restart nginx
+    
+- name: Create django 80 nginx sites-available for domain
+  template:
+    src: nginx/django-80.j2
+    dest: "{{ sites_path }}/etc/nginx/sites-enabled/{{ item.domain}}"
+  vars:
+    domain: "{{ item.domain }}"
+    name: "{{ item.name }}"
+  when:
+    - not item.ssl | default(false)
+    - item.type == "django"
+    
+- name: Create django 443 nginx sites-available for domain
+  template:
+    src: nginx/django-443.j2
+    dest: "{{ sites_path }}/etc/nginx/sites-enabled/{{ item.domain}}"
+  vars:
+    domain: "{{ item.domain }}"
+    name: "{{ item.name }}"
+  when:
+    - item.ssl | default(false)
+    - item.type == "django"

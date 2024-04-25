@@ -3,7 +3,7 @@
   include_tasks: git.yml
   loop : "{{ projects }}"
   when: 
-    - item.repository
+    - item.repository | d(false)
     - item.state == 'present'
   tags:
     - git
@@ -16,6 +16,15 @@
     - item.type == "html"
   tags:
     - copy-html
+
+- name: Create and run djanago docker compose 
+  include_tasks: django-docker-compose.yml
+  loop : "{{ projects }}"
+  when: 
+    - item.state == 'present'
+    - item.type == "django"
+  tags:
+    - django
     
 - name: Create sites available files
   include_tasks: nginx-sites-available-file.yml
