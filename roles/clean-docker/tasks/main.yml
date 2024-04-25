@@ -1,0 +1,3 @@
+- name: Prune containers
+  community.docker.docker_prune:
+    containers: true
