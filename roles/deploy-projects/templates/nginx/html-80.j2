@@ -1,7 +1,7 @@
 server {
     listen 443;
     server_name {{ domain }};
-
+    
     location / {
         return 301 http://$host$request_uri;
     }
