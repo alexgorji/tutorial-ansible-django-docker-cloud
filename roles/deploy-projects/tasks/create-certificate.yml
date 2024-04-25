@@ -17,7 +17,7 @@
         path: "{{ sites_path }}/{{ item.domain }}/certbot"
         state: directory
 
-    - name: Create a docker-compose.yml file in project_src
+    - name: Create a docker-compose.yml file in project/certbot directory
       template:
         src: docker/certbot.j2
         dest: "{{ sites_path }}/{{ item.domain }}/certbot/docker-compose.yml"
@@ -32,6 +32,7 @@
             project_src: "{{ sites_path }}/{{ item.domain }}/certbot"
             services: 
               - certbot-staging
+            project_name: "{{ item.name }}-certbot"
             state: present
           register: output   
           
@@ -63,6 +64,7 @@
             services: 
               - certbot
             state: present
+            project_name: "{{ item.name }}-certbot"
           register: output   
           
         - name: Show output
