@@ -4,7 +4,7 @@
    - Include the IP address of your cloud provider (e.g., HETZNER) in the `hosts` file under the `[webservers]` group.
 
 2. **Install and Configure a Firewall**:
-   - For clarity, utilize roles. Refer to the `firewall` folder under roles and check the `defaults` directory for variables to be used within `tasks/main.yml`.
+   - For clarity, roles are utilized. Refer to the `firewall` folder under roles and check the `defaults` directory for variables to be used within `tasks/main.yml`.
 
 3. **Create a Server User, Set Up SSH Connection, and Implement Other Security Measures**:
    - Define necessary environmental variables under `\env_vars\base.yml` and use `ansible-vault`:
@@ -20,7 +20,7 @@
           ansible-vault encrypt_string <YOUR_SERVER_USER_PASSWORD> --vault-pass-file .secret | pbcopy
           ```
        3. Paste the encrypted password into `env_files/base.py` as `server_user_password`, or replace the placeholder.
-   - Utilize the `createuser` role for essential server setups and changes, such as:
+   - The `createuser` role is created for essential server setups and changes, such as:
      - Disabling username and password logins.
      - Allowing only SSH connections with a non-root user.
      - Securing SSH communication by using encrypted SSH keys.
@@ -40,7 +40,7 @@
    - Utilizing `make` is beneficial for saving and reusing commands. Ensure necessary software is installed on your local machine.
    - Review the `Makefile`.
 
-### Step-1 on Your Machine:
+##Setting up Your Machine**:
 After cloning or mirroring this repository, follow these steps to set up your server:
 
 1. Copy your cloud provider's IP address into the `hosts` file under the `[webservers]` group.
