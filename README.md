@@ -1,49 +1,43 @@
-This is a step by step ansible tutorial for setting up a cloud server and running a dockerized Django app on it with Nginx. In the last step a backup mechanism will be added.
+## Step-by-Step Ansible Tutorial: Setting up a Cloud Server and Running a Dockerized Django App with Nginx
 
-This tutorial is a work in progress. Please make an issue if you find a bug or have a suggestion!
- 
-Each step is at the same time a branch of its own. Here is an overview of all steps:
+This tutorial provides step-by-step instructions for setting up a cloud server and deploying a Dockerized Django application with Nginx. In the final step, a backup mechanism will be implemented.
 
+**Note:** This tutorial is a work in progress. Feel free to create an issue if you find a bug or have a suggestion!
 
-1. **Step-1**: Basic security settings on the cloud
-   1. Adding IP to `hosts`
-   2. Installing and setting up a firewall
-   3. Creating a server user, setting up the SSH connection, and implementing other security measures.
-   4. Installing docker and git
-   5. Creating a Makefile for easier use and documentation reasons.
-   
-2. **Step-2**: A very simple html site with Nginx and Docker
-   1. Preparations:
-     1. Creating a `projects.yml` in `env_vars` and an appropriate playbook `2_install_projects.yml`
-   
-   2. Installing two simple html projects.
-   		1. Cloning a private or public git repository with a simple html file into `~/sites` path
-     	2. Running an Nginx container with docker compose to deploy the simple html site on `<YOUR_SIMPLE_HTML_DOMAIN>`
-          
-3. **Step-3**: ssl letsenscript 
-   		1. Staging for test reasons.
-   		2. Adding a real certificate.
-      
-4. **Step-4**: A very simple django project (without static, db and media)
-   		1. Cloning a private or public git repository with a very simple Django project into `~/sites` path
-   		2. Running an Nginx container with docker compose to deploy the simple Django site on `<YOUR_SIMPLE_DJANGO_DOMAIN>`:
-     		1. Nginx configuration.
-     		2. Using docker compose and volume
-   		3. Adding a certificate.
+Each step corresponds to a separate branch. Here's an overview of all steps:
 
-5. **Step-5**: A simple demo django project (with static, postgres db and media)
-   * Adding the environmental variables to `projects.yml` for each step.)
-   		1. Cloning a private or public git repository with a very simple Django project into `~/sites` path
-   		1. Nginx configuration.
-   		2. Using docker compose and volume
+1. **Step-1: Basic Security Settings on the Cloud**
+   - Add IP to `hosts`
+   - Install and configure a firewall
+   - Create a server user, set up the SSH connection, and implement other security measures
+   - Install Docker and Git
+   - Create a Makefile for easier use and documentation purposes
 
-6. **Step-6**: Backup
-   (Adding the environmental variables to `projects.yml` for each step.)
-   1. Create backup manually into backup volume
-   2. Use cron job for creating backup.
-   3. Install and configure git
-   2. Use GitHub for creating and loading backups.
+2. **Step-2: Deploying a Very Simple HTML Site with Nginx and Docker**
+   - **Preparations:**
+     - Create a `projects.yml` in `env_vars` and an appropriate playbook `2_deploy_projects.yml`
+   - Deploy your first simple web project
 
+3. **Step-3: SSL Let's Encrypt Setup**
+   - Add Certbot certificates to projects (staging or production)
+   - Set up Nginx for port 443
+   - Manage certificate renewals
 
-   
-For seeing each step change the branch (e.g. `git checkout Step-1`)
+4. **Step-4: Deploying a Very Simple Django Project (Without Static Files, Database, and Media)**
+   - Add a docker-compose file to the project directory to pull the image of a simple Django project and run a container (role: django-docker-compose)
+     - The variable `pull_from` sets the path to the Django project's image
+     - The variable `wsgi_path` is needed to bind Python's Web Server Gateway Interface to the container's 8000 port using Gunicorn (see `templates\docker\django.j2` in role `deploy-projects`)
+   - Add environmental variables to the docker-compose file for development or production Django settings
+   - Set up Nginx for ports 80 and 443 (role: `nginx-sites-enabled-file.yml`)
+
+5. **Step-5: Deploying a Demo Django Project (With Static Files, Postgres Database, and Media)**
+   - Use static and media files
+   - Add a database service for setting up and using Postgres
+   - Use `env_files` for setting up Django and Postgres
+
+6. **Step-6: Backup Mechanism**
+   - Create backups manually into a backup volume
+   - Use cron jobs for creating backups
+   - Utilize GitHub for creating and loading backups
+
+To view each step, change the branch (e.g., `git checkout Step-1`).
