@@ -1,6 +1,6 @@
 - name: Stop certbot-renewal container if ssl is false
   community.docker.docker_container:
-    name: "certbot-renew-{{ item.domain }}"
+    name: "certbot-renewal-{{ item.domain }}"
     state: absent
   when:
     - not item.ssl | default(false)
@@ -35,7 +35,7 @@
   community.docker.docker_compose_v2:
     project_src: "{{ sites_path }}/{{ item.domain }}/certbot"
     services: 
-      - "certbot-renew"
+      - "certbot-renewal"
     remove_orphans: true
     project_name: "{{ item.name }}"
     state: present
