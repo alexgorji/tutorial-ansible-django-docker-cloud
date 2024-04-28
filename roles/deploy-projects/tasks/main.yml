@@ -26,10 +26,10 @@
   tags:
     - django
     
-- name: Create sites available files
-  include_tasks: nginx-sites-available-file.yml
+- name: Create sites enabled files
+  include_tasks: nginx-sites-enabled-file.yml
   loop : "{{ projects }}"
-  when: 
+  when:
     - item.state == 'present'
   tags:
     - nginx-sites

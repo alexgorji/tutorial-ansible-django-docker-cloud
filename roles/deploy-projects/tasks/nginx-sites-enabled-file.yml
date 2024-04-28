@@ -1,0 +1,90 @@
+- name: Stop certbot-renewal container if ssl is false
+  community.docker.docker_container:
+    name: "certbot-renewal-{{ item.domain }}"
+    state: absent
+  when:
+    - not item.ssl | default(false)
+
+
+- name: Check for certificate and create it if necessary
+  block:
+    - name: Check if certificate exists
+      become: yes
+      become_user: root
+      stat:
+        path: "{{ sites_path }}/etc/certbot/conf/live/{{ item.domain }}/fullchain.pem"
+      register: certificate
+      
+    - name: Check if a file named "staging" exists
+      become: yes
+      become_user: root
+      stat:
+        path: "{{ sites_path }}/{{ item.domain }}/certbot/staging"
+      register: staging
+    
+    - name: Create certificate if necessary
+      include_tasks: create-certificate.yml
+      when: not certificate.stat.exists or 
+            (not item.staging | d(false) and staging.stat.exists) or
+            (item.staging | d(false) and not staging.stat.exists)
+      
+  when:
+    - item.ssl | default(false)
+    
+- name: Start certbot-renewal service
+  community.docker.docker_compose_v2:
+    project_src: "{{ sites_path }}/{{ item.domain }}/certbot"
+    services: 
+      - "certbot-renewal"
+    remove_orphans: true
+    project_name: "{{ item.name }}"
+    state: present
+  when:
+    - item.ssl | default(false)
+
+- name: Creating nginx sites-enables file for domain
+  - block:
+    - name: Create html 80 nginx sites-enabled for domain
+      template:
+        src: nginx/html-80.j2
+        dest: "{{ sites_path }}/etc/nginx/sites-enabled/{{ item.domain}}"
+      vars:
+        domain: "{{ item.domain }}"
+      when:
+        - not item.ssl | default(false)
+        - item.type == "html"
+
+    - name: Create html 443 nginx sites-enabled for domain
+      template:
+        src: nginx/html-443.j2
+        dest: "{{ sites_path }}/etc/nginx/sites-enabled/{{ item.domain}}"
+      vars:
+        domain: "{{ item.domain }}"
+      when:
+        - item.ssl | default(false)
+        - item.type == "html"
+
+    - name: Create django 80 nginx sites-enabled for domain
+      template:
+        src: nginx/django-80.j2
+        dest: "{{ sites_path }}/etc/nginx/sites-enabled/{{ item.domain}}"
+      vars:
+        domain: "{{ item.domain }}"
+        name: "{{ item.name }}"
+      when:
+        - not item.ssl | default(false)
+        - item.type == "django"
+    
+    - name: Create django 443 nginx sites-enabled for domain
+      template:
+        src: nginx/django-443.j2
+        dest: "{{ sites_path }}/etc/nginx/sites-enabled/{{ item.domain}}"
+      vars:
+        domain: "{{ item.domain }}"
+        name: "{{ item.name }}"
+      when:
+        - item.ssl | default(false)
+        - item.type == "django"
+        
+  notify:
+    restart nginx

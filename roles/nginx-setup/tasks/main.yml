@@ -25,3 +25,4 @@
     project_src: "{{ sites_path }}"
     remove_orphans: true
     state: present
+
