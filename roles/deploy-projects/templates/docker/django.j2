@@ -1,12 +1,20 @@
 services:
   backend-{{ name }}:
     image: "{{ pull_from }}"
-    container_name: backend-{{ domain }}
-    command: gunicorn {{ wsgi_path }}:application --bind 0.0.0.0:8000
+    container_name: backend-{{ name }}
+    command:
+      - sh
+      - -c
+      - |
+        export SECRET_KEY=$(python create-key.py)
+        gunicorn {{ wsgi_path }}:application --bind 0.0.0.0:8000
+    env_file:
+      - "{{ env_file }}"
     expose:
       - 8000
     networks:
       - nginx-network
+    
 
 networks:
   nginx-network:
