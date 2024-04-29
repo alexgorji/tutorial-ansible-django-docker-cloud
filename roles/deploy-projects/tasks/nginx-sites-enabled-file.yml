@@ -50,6 +50,8 @@
       - "certbot-renewal"
     remove_orphans: true
     project_name: "{{ item.name }}"
+    files:
+      - docker-compose-certbot.yml
     state: present
   when:
     - item.ssl | default(false)
