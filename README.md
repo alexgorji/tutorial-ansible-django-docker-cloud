@@ -24,9 +24,8 @@ Each step corresponds to a separate branch. Here's an overview of all steps:
    - Manage certificate renewals
 
 4. **Step-4: Deploying a Very Simple Django Project (Without Static Files, Database, and Media)**
-   - Add a docker-compose file to the project directory to pull the image of a simple Django project and run a container (role: django-docker-compose)
-
-   - Add environmental variables to the docker-compose file for development or production Django settings
+   - Add a `docker-compose-django` file to the project directory to pull the image of a simple Django project and run a container (role: `django-docker-compose`)
+   - Add an `env_file` to the `docker-compose-django` file for development or production Django settings
    - Set up Nginx for ports 80 and 443 (role: `nginx-sites-enabled-file.yml`)
 
 5. **Step-5: Deploying a Demo Django Project (With Static Files, Postgres Database, and Media)**
