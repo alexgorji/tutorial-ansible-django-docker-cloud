@@ -4,15 +4,21 @@
     path: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}"
     state: directory
     
+- name: Copy env_file
+  ansible.builtin.copy:
+    src: "{{ item.env_file}}"
+    dest: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}"
+
 - name: Create docker compose for django
   template:
     src: docker/django.j2
-    dest: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}/docker-compose.yml"
+    dest: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}/docker-compose-django.yml"
   vars:
     pull_from: "{{ item.pull_from }}"
     wsgi_path: "{{ item.wsgi_path }}"
     domain: "{{ item.domain }}"
     name: "{{ item.name }}"
+    env_file: "{{ item.env_file | basename}}"
 
 - name: Pull image and start docker compose
   block:
@@ -20,11 +26,12 @@
       community.docker.docker_compose_v2:
         project_src: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}"
         state: present
+        files: 
+          - docker-compose-django.yml
         project_name: "{{ item.name }}-django"
         pull: always
         remove_orphans: true
-        services:
-          - backend-{{ item.name }}
+        
       register: output
       
     - name: Show output
