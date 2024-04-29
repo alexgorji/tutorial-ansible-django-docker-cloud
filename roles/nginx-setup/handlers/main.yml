@@ -2,4 +2,6 @@
 - name: restart nginx
   community.docker.docker_compose_v2:
     project_src: "{{ sites_path }}"
+    files:
+      - docker-compose-nginx.yml
     state: restarted
