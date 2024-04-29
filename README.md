@@ -25,6 +25,7 @@ Each step corresponds to a separate branch. Here's an overview of all steps:
 
 4. **Step-4: Deploying a Very Simple Django Project (Without Static Files, Database, and Media)**
    - Add a docker-compose file to the project directory to pull the image of a simple Django project and run a container (role: django-docker-compose)
+
    - Add environmental variables to the docker-compose file for development or production Django settings
    - Set up Nginx for ports 80 and 443 (role: `nginx-sites-enabled-file.yml`)
 

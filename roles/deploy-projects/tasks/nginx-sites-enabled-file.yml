@@ -4,8 +4,20 @@
     state: absent
   when:
     - not item.ssl | default(false)
+        
+- name: Make sure certbot folder exists in project
+  ansible.builtin.file:
+    path: "{{ sites_path }}/{{ item.domain }}/certbot"
+    state: directory
 
-
+- name: Create a docker-compose-certbot.yml file in project/certbot directory
+  template:
+    src: docker/certbot.j2
+    dest: "{{ sites_path }}/{{ item.domain }}/certbot/docker-compose-certbot.yml"
+  vars:
+    domain: "{{ item.domain }}"
+    name: "{{ item.name }}"
+    
 - name: Check for certificate and create it if necessary
   block:
     - name: Check if certificate exists
