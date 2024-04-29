@@ -8,20 +8,20 @@
 2. **Deploying Your First Simple Web Projects**:
    - Review `projects.yml` to determine the required variables.
    - An Nginx container with Docker Compose is setup and run (refer to roles: nginx-config).
-     - `deploy-projects`:
-       1. Role `git`:
-          * Clones a private or public git repository containing a simple HTML file into your sites path.
-          * Demo public repositories will be used for this tutorial.
-          * If not logged in as a GitHub user or lack SSH access to GitHub, clone repositories via HTTPS web URL.
-          * For GitHub SSH access, add the server's public key to your GitHub account.
-       2. Role `copy-html-folder`:
-          * Copies the HTML directory of each project into the Nginx container. This is the simplest method to run test HTML sites.
-       3. Role `nginx-sites-enabled-file`:
-          * Adds an appropriate Nginx configuration file to sites-enabled for each web project.
-       4. Role `clean-docker`:
-          * Performs simple container cleaning.
-       5. Role `remove-projects`:
-          * Stops Docker containers and removes project files from disk if `state` is set to absent.
+   - `deploy-projects`:
+     1. Tasks `git`:
+        * Clones a private or public git repository containing a simple HTML file into your sites path.
+        * Demo public repositories will be used for this tutorial.
+        * If not logged in as a GitHub user or lack SSH access to GitHub, clone repositories via HTTPS web URL.
+        * For GitHub SSH access, add the server's public key to your GitHub account.
+     2. Tasks `copy-html-folder`:
+        * Copies the HTML directory of each project into the Nginx container. This is the simplest method to run test HTML sites.
+     3. Tasks `nginx-sites-enabled-file`:
+        * Adds an appropriate Nginx configuration file to sites-enabled for each web project.
+   - Role `clean-docker`:
+      * Performs simple container cleaning.
+   - Role `remove-projects`:
+      * Stops Docker containers and removes project files from disk if `state` is set to absent.
 
 ##Setting up Your Machine:
 1. Follow the setup steps described in Step-1.

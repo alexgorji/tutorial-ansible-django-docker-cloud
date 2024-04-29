@@ -17,12 +17,14 @@
   become_user: "{{ server_user }}"
   template:
     src: docker-compose-nginx.j2
-    dest: "{{ sites_path }}/docker-compose.yml"
+    dest: "{{ sites_path }}/docker-compose-nginx.yml"
 
 
 - name: Start docker compose file nginx
   community.docker.docker_compose_v2:
     project_src: "{{ sites_path }}"
+    files:
+      - docker-compose-nginx.yml
     remove_orphans: true
     state: present
 
