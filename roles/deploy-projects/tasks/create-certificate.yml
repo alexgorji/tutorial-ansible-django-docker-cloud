@@ -10,20 +10,9 @@
     - name: Restart nginx
       community.docker.docker_compose_v2:
         project_src: "{{ sites_path }}"
+        files:
+          - docker-compose-nginx.yml
         state: restarted
-        
-    - name: Make sure certbot folder exists in project
-      ansible.builtin.file:
-        path: "{{ sites_path }}/{{ item.domain }}/certbot"
-        state: directory
-
-    - name: Create a docker-compose.yml file in project/certbot directory
-      template:
-        src: docker/certbot.j2
-        dest: "{{ sites_path }}/{{ item.domain }}/certbot/docker-compose.yml"
-      vars:
-        domain: "{{ item.domain }}"
-        name: "{{ item.name }}"
         
     - name: staging block
       block:
@@ -33,6 +22,8 @@
             services: 
               - certbot-staging
             project_name: "{{ item.name }}-certbot"
+            files: 
+              - docker-compose-certbot.yml
             state: present
           register: output   
           
@@ -61,11 +52,13 @@
         - name: Start certbot service
           community.docker.docker_compose_v2:
             project_src: "{{ sites_path }}/{{ item.domain }}/certbot"
+            files: 
+              - docker-compose-certbot.yml
             services: 
               - certbot
             state: present
             project_name: "{{ item.name }}-certbot"
-          register: output   
+          register: output
           
         - name: Show output
           ansible.builtin.debug:
