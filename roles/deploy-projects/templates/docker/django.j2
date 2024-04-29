@@ -6,7 +6,7 @@ services:
       - sh
       - -c
       - |
-        export SECRET_KEY=$(python create-key.py)
+        export SECRET_KEY=$(python create_key.py)
         gunicorn {{ wsgi_path }}:application --bind 0.0.0.0:8000
     env_file:
       - "{{ env_file }}"

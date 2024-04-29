@@ -28,10 +28,13 @@ Each step corresponds to a separate branch. Here's an overview of all steps:
    - Add an `env_file` to the `docker-compose-django` file for development or production Django settings
    - Set up Nginx for ports 80 and 443 (role: `nginx-sites-enabled-file.yml`)
 
-5. **Step-5: Deploying a Demo Django Project (With Static Files, Postgres Database, and Media)**
-   - Use static and media files
-   - Add a database service for setting up and using Postgres
-   - Use `env_files` for setting up Django and Postgres
+5. **Step-5: Deploying a Demo Django Project (With Static Files, SQLLite Database, and Media)**
+   - Setup Ngninx to use static and media files
+   - Use `env_files` for setting up database settings.
+   
+6. **Step-6: Using Postgres**
+   - Use a db service for using Postgres 
+   - Use `env_files` for setting up database settings.
 
 6. **Step-6: Backup Mechanism**
    - Create backups manually into a backup volume
