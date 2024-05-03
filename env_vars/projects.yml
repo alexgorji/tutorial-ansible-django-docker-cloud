@@ -26,6 +26,7 @@ projects:
     pull_from: ghcr.io/alexgorji/simple-django-project:0.1
     env_file: project_files/simple-django-project/env.dev
     wsgi_path: simple_django_project.wsgi
+    env_file: project_files/<PROJECT_NAME-3>/env.dev
     state: present
     
   - name: <PROJECT_NAME-4>
@@ -35,5 +36,5 @@ projects:
     staging: false
     pull_from: ghcr.io/alexgorji/simple-django-project:0.1
     wsgi_path: simple_django_project.wsgi
-    env_file: project_files/simple-django-project-2/env.dev
+    env_file: project_files/<PROJECT_NAME-4>/env.dev
     state: present
