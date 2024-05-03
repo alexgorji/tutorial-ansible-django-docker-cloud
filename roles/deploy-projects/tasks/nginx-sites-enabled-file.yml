@@ -49,9 +49,9 @@
     services: 
       - "certbot-renewal"
     remove_orphans: true
-    project_name: "{{ item.name }}"
     files:
       - docker-compose-certbot.yml
+    project_name: "{{ item.name }}"
     state: present
   when:
     - item.ssl | default(false)
@@ -85,6 +85,7 @@
     vars:
       domain: "{{ item.domain }}"
       name: "{{ item.name }}"
+      proxy_name: "{{ item.name | replace('-','_')}}"
     when:
       - not item.ssl | default(false)
       - item.type == "django"
@@ -96,9 +97,10 @@
     vars:
       domain: "{{ item.domain }}"
       name: "{{ item.name }}"
+      proxy_name: "{{ item.name | replace('-','_')}}"
     when:
       - item.ssl | default(false)
       - item.type == "django"
-
+        
   notify:
     restart nginx
