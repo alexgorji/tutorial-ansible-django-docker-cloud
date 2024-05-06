@@ -18,24 +18,53 @@
     wsgi_path: "{{ item.wsgi_path }}"
     domain: "{{ item.domain }}"
     name: "{{ item.name }}"
+    media_volume: "{{ item.media_volume | d(false)}}"
+    postgres: "{{ item.postgres | d(false)}}"
     env_file: "{{ item.env_file | basename}}"
 
-- name: Pull image and start docker compose
+
+- name: Pull image and start docker compose backend 
   block:
-    - name: Pull image and start docker compose
+    - name: Pull image and start docker compose backend 
       community.docker.docker_compose_v2:
         project_src: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}"
         state: present
         files: 
           - docker-compose-django.yml
-        project_name: "{{ item.name }}-django"
         pull: always
+        recreate: always
         remove_orphans: true
-        
+        services:
+          - backend-{{item.name}}
       register: output
-      
+      notify:
+        - restart nginx
+      when:
+        - not item.postgres | d(false)
+    
+    - name: Show output-backend
+      ansible.builtin.debug:
+        msg: "{{ output }}"
+        
+- name: Pull image and start docker compose backend and postgres db
+  block:
+    - name: Pull image and start docker compose backend and postgres db
+      community.docker.docker_compose_v2:
+        project_src: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}"
+        state: present
+        files: 
+          - docker-compose-django.yml
+        pull: always
+        recreate: always
+        remove_orphans: true
+        services:
+          - db-{{item.name}}
+          - backend-{{item.name}}
+      register: output
+      notify:
+        - restart nginx
+      when:
+        - item.postgres | d(false)
     - name: Show output
       ansible.builtin.debug:
         msg: "{{ output }}"
-  notify:
-    - restart nginx

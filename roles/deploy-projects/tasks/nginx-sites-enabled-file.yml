@@ -86,6 +86,7 @@
     vars:
       domain: "{{ item.domain }}"
       name: "{{ item.name }}"
+      media_volume: "{{ item.media_volume | d(false) }}"
       proxy_name: "{{ item.name | replace('-','_')}}"
     when:
       - not item.ssl | default(false)
@@ -98,6 +99,7 @@
     vars:
       domain: "{{ item.domain }}"
       name: "{{ item.name }}"
+      media_volume: "{{ item.media_volume | d(false) }}"
       proxy_name: "{{ item.name | replace('-','_')}}"
     when:
       - item.ssl | default(false)

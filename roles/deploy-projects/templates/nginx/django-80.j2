@@ -17,9 +17,13 @@ server {
       alias /var/www/{{ domain }}/staticfiles/;
     }
 
-    location /protected/ {
+    location /media/ {
       internal;
-      alias /var/www/{{ domain }}/protected/;
+{% if media_volume %}
+      alias /apps/{{ domain }}/media/;
+{% else %}
+      alias /var/www/{{ domain }}/media/;
+{% endif %}
     }
 
   }

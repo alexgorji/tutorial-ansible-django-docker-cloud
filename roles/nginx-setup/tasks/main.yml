@@ -27,4 +27,3 @@
       - docker-compose-nginx.yml
     remove_orphans: true
     state: present
-

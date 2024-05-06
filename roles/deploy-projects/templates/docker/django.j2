@@ -2,20 +2,57 @@ services:
   backend-{{ name }}:
     image: "{{ pull_from }}"
     container_name: backend-{{ name }}
+    restart: always
     command:
       - sh
       - -c
       - |
         export SECRET_KEY=$(python create_key.py)
+        python3 manage.py collectstatic --noinput
+        python3 manage.py makemigrations --noinput
+        python3 manage.py migrate --noinput
         gunicorn {{ wsgi_path }}:application --bind 0.0.0.0:8000
+    volumes:
+      - {{ sites_path }}/var/www/{{ domain }}/staticfiles:/var/www/app/staticfiles
+{% if media_volume %}
+      - media_volume-{{ name }}:/var/www/app/media
+{% else %}
+      - {{ sites_path }}/var/www/{{ domain }}/media:/var/www/app/media
+{% endif %}
     env_file:
-      - "{{ env_file }}"
+      - {{ env_file }}
     expose:
       - 8000
     networks:
       - nginx-network
-    
 
+{% if postgres %}      
+  db-{{ name }}:
+    image: postgres:16
+    container_name: db-{{ name }}
+    restart: always
+
+    volumes:
+      - postgres_data-{{ name }}:/var/lib/postgresql/data/
+
+    env_file:
+      - {{ env_file }}
+    networks:
+      - nginx-network
+{% endif %}
+
+{% if media_volume or postgres %}
+volumes:
+{% endif %}
+{% if postgres %}
+  postgres_data-{{ name }}:
+    name: "postgres_data-{{ name }}"
+{% endif %}
+{% if media_volume %}
+  media_volume-{{ name }}:
+    external: true
+{% endif %}
+      
 networks:
   nginx-network:
     external: true
