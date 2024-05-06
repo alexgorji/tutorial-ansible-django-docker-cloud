@@ -1,4 +1,6 @@
 - name: Remove project
+  become: yes
+  become_user: root
   block:
   - name: Remove config file from enabled sites
     file:
