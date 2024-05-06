@@ -14,8 +14,7 @@ Each step corresponds to a separate branch. Here's an overview of all steps:
    - Create a Makefile for easier use and documentation purposes
 
 2. **Step-2: Deploying a Very Simple HTML Site with Nginx and Docker**
-   - **Preparations:**
-     - Create a `projects.yml` in `env_vars` and an appropriate playbook `2_deploy_projects.yml`
+   - Preparations
    - Deploy your first simple web project
 
 3. **Step-3: SSL Let's Encrypt Setup**
@@ -29,9 +28,11 @@ Each step corresponds to a separate branch. Here's an overview of all steps:
    - Set up Nginx for ports 80 and 443 (role: `nginx-sites-enabled-file.yml`)
 
 5. **Step-5: Deploying a Demo Django Project (With Static Files, SQLLite/Postgres Database, and Media)**
-   - Setup Ngninx to use static and media files
-   - Use a db service for using Postgres 
-   - Use `env_files` for setting up database settings in Django settings and Postgres container.
+  - Add staticfiles' path to backend service
+  - Add a media volume to backend service if needed
+  - Setup nginx service and update configuration files to use static and media files
+  - Add a db service for using postgres
+  - Use env_files for setting up database settings in Django settings and postgres container
 
 6. **Step-6: Backup Mechanism**
    - Create backups manually into a backup volume
