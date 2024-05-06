@@ -12,6 +12,6 @@
 1. Follow the setup steps described in Step-1, Step-2 and Step-3.
 2. Set project's variables within `env_vars/projects.yml`. The new variables are: 
   - `pull_from` for the path to the docker image of your Django project.
-  - `wsgi_path` of you Djnago project. This is usually set to `<UNDERLINED_PROJECT_NAME>.wsgi`
+  - `wsgi_path` of you Django project. This is usually set to `<UNDERLINED_PROJECT_NAME>.wsgi`
   - The path to your `env_file`. You can put your files into `project_files/<PROJECT_NAME>`
-3. Set environmental variables inside your `env_file`. These variables can vary depending on your Django project. 
+3. Set environmental variables inside your `env_file`. These variables can vary depending on your Django project.
