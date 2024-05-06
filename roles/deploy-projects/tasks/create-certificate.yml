@@ -35,14 +35,22 @@
           become: yes
           become_user: root
           ansible.builtin.wait_for:
-            path: "{{ sites_path }}/etc/certbot/conf/live/{{ item.domain }}/fullchain.pem" 
+            path: "{{ certbot_path }}/letsencrypt/live/{{ item.domain }}/fullchain.pem" 
             
-        - name: Add a file named "staging" to cert directory
-          become: yes
-          become_user: root
-          ansible.builtin.file:
-            path: "{{ sites_path }}/{{ item.domain }}/certbot/staging"
-            state: touch
+        - name: Register domain as "staging"
+          block:
+          - name: Make sure <certbot_path>/staging/ exists
+            become: yes
+            become_user: root
+            ansible.builtin.file:
+              path: "{{ certbot_path }}/staging"
+              state: directory
+          - name: Register domain as "staging"
+            become: yes
+            become_user: root
+            ansible.builtin.file:
+              path: "{{ certbot_path }}/staging/{{ item.domain }}"
+              state: touch
             
       when:
         - item.staging | default(false)
@@ -58,7 +66,7 @@
               - certbot
             state: present
             project_name: "{{ item.name }}-certbot"
-          register: output
+          register: output   
           
         - name: Show output
           ansible.builtin.debug:
@@ -68,13 +76,13 @@
           become: yes
           become_user: root
           ansible.builtin.wait_for:
-            path: "{{ sites_path }}/etc/certbot/conf/live/{{ item.domain }}/fullchain.pem"
+            path: "{{ certbot_path }}/letsencrypt/live/{{ item.domain }}/fullchain.pem"
             
-        - name: Remove "staging" file if existing
+        - name: Unregister domain as "staging"
           become: yes
           become_user: root
           ansible.builtin.file:
-            path: "{{ sites_path }}/{{ item.domain }}/certbot/staging"
+            path: "{{ certbot_path }}/staging/{{ item.domain }}"
             state: absent
       when:
         - not item.staging | default(false)

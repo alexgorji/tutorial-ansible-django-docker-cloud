@@ -57,4 +57,3 @@ projects:
     pull_from: ghcr.io/alexgorji/demo-django-project:0.1
     wsgi_path: demo_django_project.wsgi
     env_file: project_files/<PROJECT_NAME-6>/env.dev
-    state: present
