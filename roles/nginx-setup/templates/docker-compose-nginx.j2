@@ -10,7 +10,8 @@ services:
       - {{ sites_path }}/var/www/:/var/www/
       - {{ certbot_path }}/letsencrypt:/etc/letsencrypt
       - {{ certbot_path }}/www:/var/www/certbot
-      
+    restart: always
+    
     networks:
       - nginx-network
 
