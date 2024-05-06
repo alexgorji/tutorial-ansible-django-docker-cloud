@@ -48,9 +48,12 @@ After cloning or mirroring this repository, follow these steps to set up your se
 3. Encrypt your `server_user_password`.
 4. Update `env_vars/base.yml` with `server_user`, the encrypted `server_user_password`, `local_public_ssh_key_path`, and `ssh_key_file_name`.
 5. Generate SSH keys, encrypt them, and add them to `/roles/createuser/files/YOUR_SSH_KEY_FILE_NAME` (private) and `/roles/createuser/files/YOUR_SSH_KEY_FILE_NAME.pub` (public).
-6. Execute the Ansible playbook `1_setup_webserver.yml` using the command:
+6. For private GitHub repos if needed:
+   1. Add the public SSH key of your server to your GitHub account.
+   2. Add GitHub credentials to `env_vars/base.yml` and uncomment the configurations part in `roles/base-installations/tasks/install_and_configure_git.yml`.
+7. Execute the Ansible playbook `1_setup_webserver.yml` using the command:
     ```
     make as-root-user-webservers
     ```
-7. If necessary, remove the cloud provider's IP address from known keys with the command: `ssh-keygen -R <IP>`.
-8. You can now access the server via SSH using: `ssh <YOUR_SERVER_USERNAME>@
+8. If necessary, remove the cloud provider's IP address from known keys with the command: `ssh-keygen -R <IP>`.
+9. You can now access the server via SSH using: `ssh <YOUR_SERVER_USERNAME>@
