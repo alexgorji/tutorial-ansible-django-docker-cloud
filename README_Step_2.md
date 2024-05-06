@@ -25,8 +25,7 @@
 
 ##Setting up Your Machine:
 1. Follow the setup steps described in Step-1.
-2. If necessary (e.g., for using private repositories), add GitHub credentials to `env_vars/base.yml` and uncomment the configuration part in `/roles/base_installations/tasks/install_and_configure_git.yml`.
-3. Replace `<YOUR_SERVER_USERNAME>` in the `Makefile` with your server username.
-4. Add your `<PROJECT_NAME>` and `<DOMAIN>` to `/env_vars/projects.yml`.
-5. You can set `status` to absent to stop Docker containers and remove all files of a project.
-6. To deploy the project, run:
+2. Replace `<YOUR_SERVER_USERNAME>` in the `Makefile` with your server username.
+3. Add your `<PROJECT_NAME>` and `<DOMAIN>` to `/env_vars/projects.yml`.
+4. You can set `status` to absent to stop Docker containers and remove all files of a project.
+5. To deploy the project, run:
