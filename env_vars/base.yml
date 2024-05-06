@@ -11,3 +11,4 @@ sites_path: "/home/{{ server_user }}/sites"
 # git_user_name: <YOUR_GIT_USER_NAME>
 
 certbot_email: <YOUR_CERTBOT_EAMIL>
+certbot_path: /home/{{ server_user }}/certbot

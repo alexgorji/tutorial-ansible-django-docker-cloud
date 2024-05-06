@@ -3,6 +3,7 @@
 1. **Add Certbot Certificates to Projects (Staging or Production)**:
    - Added certificate options to `nginx-sites-enabled` and created a new `create-certificate` tasks file.
    - Add an email address to `env_vars/base.yml` for Certbot to send warning messages if a certificate is expiring.
+   - Add a certbot path on server in `env_vars/base.yml` 
    - Set `ssl` and `staging` variables in `env_vars/projects.yml`:
      - If `ssl` is false or not set, no certificate check takes place.
      - If `ssl` is true:
@@ -26,4 +27,5 @@
 ### Setting up Your Machine:
 1. Follow the setup steps described in Step-1 and Step-2.
 2. Add your email address to `env_vars/base.yml` as `certbot_email`.
+3. Update `certbot_path` in `env_vars/base.yml` if needed.
 3. Use variables `ssl` and `staging` for your projects in `env_vars/projects.yml`.
