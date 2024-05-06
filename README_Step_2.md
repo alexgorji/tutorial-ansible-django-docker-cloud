@@ -28,4 +28,7 @@
 2. Replace `<YOUR_SERVER_USERNAME>` in the `Makefile` with your server username.
 3. Add your `<PROJECT_NAME>` and `<DOMAIN>` to `/env_vars/projects.yml`.
 4. You can set `status` to absent to stop Docker containers and remove all files of a project.
-5. To deploy the project, run:
+5. To deploy the project, run:     
+    ```
+    make as-admin-user-projects
+    ```
