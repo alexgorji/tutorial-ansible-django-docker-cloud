@@ -25,13 +25,11 @@
               regexp="^PermitRootLogin"
               line="PermitRootLogin no"
               state=present           
-  notify: restart sshd
   
 - name: Disable password access
   lineinfile: dest=/etc/ssh/sshd_config
               line="PasswordAuthentication no"
               state=present
-  notify: restart sshd
   
 - name: Change permissions on home directory
   file:
