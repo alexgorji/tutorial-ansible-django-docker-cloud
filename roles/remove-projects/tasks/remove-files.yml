@@ -7,10 +7,15 @@
       path: "{{ sites_path }}/etc/nginx/sites-enabled/{{ item.domain }}"
       state: absent
   
-  - name: Stop backend container if needed
-    community.docker.docker_container:
-      name: "backend-{{ item.domain }}"
+  - name: Django docker compose down
+    community.docker.docker_compose_v2:
+      project_src: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}"
       state: absent
+      files: 
+        - docker-compose-django.yml
+      remove_orphans: true
+    when:
+      - item.type == 'django'
 
   - name: Stop certbot renewal container if needed
     community.docker.docker_container:
