@@ -12,7 +12,7 @@
       name: "backend-{{ item.domain }}"
       state: absent
 
-  - name: Stop certbot renew container if needed
+  - name: Stop certbot renewal container if needed
     community.docker.docker_container:
       name: "certbot-renewal-{{ item.domain }}"
       state: absent

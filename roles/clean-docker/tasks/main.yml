@@ -1,3 +1,4 @@
-- name: Prune containers
+- name: Prune containers and volumes
   community.docker.docker_prune:
     containers: true
+    volumes: true

@@ -24,14 +24,14 @@
       become: yes
       become_user: root
       stat:
-        path: "{{ sites_path }}/etc/certbot/conf/live/{{ item.domain }}/fullchain.pem"
+        path: "{{ certbot_path}}/letsencrypt/live/{{ item.domain }}/fullchain.pem"
       register: certificate
       
-    - name: Check if a file named "staging" exists
+    - name: Check if domain is registered as "staging"
       become: yes
       become_user: root
       stat:
-        path: "{{ sites_path }}/{{ item.domain }}/certbot/staging"
+        path: "{{ certbot_path }}/staging/{{ item.domain }}"
       register: staging
     
     - name: Create certificate if necessary
@@ -49,9 +49,10 @@
     services: 
       - "certbot-renewal"
     remove_orphans: true
+    recreate: always
     files:
       - docker-compose-certbot.yml
-    project_name: "{{ item.name }}"
+    project_name: "{{ item.name }}-certbot-renew"
     state: present
   when:
     - item.ssl | default(false)
