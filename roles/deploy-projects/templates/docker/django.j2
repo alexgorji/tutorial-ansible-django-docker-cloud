@@ -2,6 +2,7 @@ services:
   backend-{{ name }}:
     image: "{{ pull_from }}"
     container_name: backend-{{ name }}
+    restart: always
     command:
       - sh
       - -c
