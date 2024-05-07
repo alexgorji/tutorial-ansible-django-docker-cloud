@@ -7,7 +7,7 @@
 2. **Add a media volume to backend service if needed**:
    - If the project's variable `media_volume` is true, add a volume to the Docker Compose file for backing up uploaded files. Uploaded media files will remain existing in a volume named `media_volume-<PROJECT_NAME>` in case domain files are deleted on the server. To remove all files, remove this volume on the server.
 
-3. **Setup nginx service and update configuration files to use static and media files**:
+3. **Setup Nginx service and update configuration files to use static and media files**:
    - Add two locations to Nginx configuration files to serve static and media files.
 
 4. **Add a db service for using postgres**:
@@ -20,3 +20,20 @@
 1. Follow the setup steps described in Step-1, Step-2, Step-3, and Step-3.
 2. Set variables `media_volume` and `postgres` to `true` if needed.
 3. Set appropriate environmental variables in `env_file` if needed.
+  - If you are using postgres the following variables must be set: `SQL_ENGINE=django.db.backends.postgresql, SQL_DATABASE=<DATABASE_NAME>, SQL_USER=<YOUR_DB_USER>, SQL_PASSWORD=<YOUR_DB_PASSWORD>, SQL_HOST=db-<PROJECT_NAME> SQL_PORT=5432`
+  - This settings in Django are assumed:
+    
+    ```
+    DATABASES = {
+        "default": {
+            "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+            "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+            "USER": os.environ.get("SQL_USER", "user"),
+            "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+            "HOST": os.environ.get("SQL_HOST", "localhost"),
+            "PORT": os.environ.get("SQL_PORT", "5432"),
+        }
+    }
+    ```
+    
+  - For postgres container: `POSTGRES_USER=<YOUR_DB_USER>`, `POSTGRES_PASSWORD=<YOUR_DB_PASSWORD>`, `POSTGRES_DB=<DATABASE_NAME>`
