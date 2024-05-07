@@ -49,7 +49,6 @@
     services: 
       - "certbot-renewal"
     remove_orphans: true
-    recreate: always
     files:
       - docker-compose-certbot.yml
     project_name: "{{ item.name }}-certbot-renew"

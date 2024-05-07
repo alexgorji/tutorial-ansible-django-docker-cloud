@@ -22,6 +22,12 @@
     postgres: "{{ item.postgres | d(false)}}"
     env_file: "{{ item.env_file | basename}}"
 
+- name: Make sure docker compose backend service has been stopped.
+  community.docker.docker_compose_v2:
+    project_src: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}"
+    state: stopped
+    files: 
+      - docker-compose-django.yml
 
 - name: Pull image and start docker compose backend 
   block:
@@ -32,7 +38,6 @@
         files: 
           - docker-compose-django.yml
         pull: always
-        recreate: always
         remove_orphans: true
         services:
           - backend-{{item.name}}
@@ -55,7 +60,6 @@
         files: 
           - docker-compose-django.yml
         pull: always
-        recreate: always
         remove_orphans: true
         services:
           - db-{{item.name}}
