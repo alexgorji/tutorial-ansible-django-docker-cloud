@@ -20,22 +20,27 @@
     name: "{{ item.name }}"
     env_file: "{{ item.env_file | basename}}"
 
-- name: Pull image and start docker compose
+- name: Make sure docker compose backend service has been stopped.
+  community.docker.docker_compose_v2:
+    project_src: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}"
+    state: stopped
+    files: 
+      - docker-compose-django.yml
+
+- name: Pull image and start docker compose backend 
   block:
-    - name: Pull image and start docker compose
+    - name: Pull image and start docker compose backend 
       community.docker.docker_compose_v2:
         project_src: "{{ sites_path }}/{{ item.domain }}/{{ item.name }}"
         state: present
         files: 
           - docker-compose-django.yml
-        project_name: "{{ item.name }}-django"
         pull: always
         remove_orphans: true
-        
       register: output
-      
-    - name: Show output
+      notify:
+        - restart nginx
+    
+    - name: Show output-backend
       ansible.builtin.debug:
         msg: "{{ output }}"
-  notify:
-    - restart nginx
